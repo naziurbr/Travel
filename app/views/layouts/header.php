@@ -11,8 +11,8 @@
   <link rel="icon" type="image/x-icon" href="<?= APP_URL ?>/public/images/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="<?= APP_URL ?>/public/images/apple-touch-icon.png">
   
-  <!-- CSS -->
-  <link rel="stylesheet" href="<?= APP_URL ?>/public/css/main.css">
+  <!-- CSS - FIXED with versioning to prevent cache -->
+  <link rel="stylesheet" href="<?= APP_URL ?>/public/css/main.css?v=<?= time() ?>">
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,13 +29,77 @@
   <meta property="og:url" content="<?= APP_URL ?>">
   <meta property="og:type" content="website">
   
-  <!-- Preload critical resources -->
-  <link rel="preload" href="<?= APP_URL ?>/public/css/main.css" as="style">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" as="style">
+  <!-- EMERGENCY INLINE CSS to force visibility -->
+  <style>
+    /* Force everything to be visible */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: 'Inter', sans-serif !important; 
+      background: #F9F9F9 !important; 
+      color: #333 !important; 
+      min-height: 100vh !important;
+      overflow-x: hidden !important;
+    }
+    
+    /* Force header to show */
+    header.header {
+      background: #0A3D62 !important;
+      color: white !important;
+      padding: 1rem 0 !important;
+      position: relative !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 1000 !important;
+    }
+    
+    /* Force main content spacing */
+    main.main-content {
+      padding-top: 80px !important;
+      min-height: 100vh !important;
+    }
+    
+    /* Make sure container works */
+    .container {
+      width: 100% !important;
+      max-width: 1200px !important;
+      margin: 0 auto !important;
+      padding: 0 20px !important;
+    }
+    
+    /* Basic navigation */
+    .nav {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    
+    /* Make links visible */
+    a {
+      color: #22A6B3 !important;
+      text-decoration: none !important;
+      padding: 8px 12px !important;
+      display: inline-block !important;
+    }
+    
+    /* Basic button styling */
+    .btn {
+      background: #F0A500 !important;
+      color: white !important;
+      padding: 12px 24px !important;
+      border-radius: 8px !important;
+      border: none !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      font-weight: 600 !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Loading Animation -->
-  <div id="loading" class="loading-screen">
+  <div id="loading" class="loading-screen" style="display: none;">
     <div class="loading-content">
       <div class="loading-spinner">
         <div class="spinner-circle"></div>
@@ -179,7 +243,7 @@
       </div>
 
       <!-- Search Bar -->
-      <div class="search-bar" id="searchBar">
+      <div class="search-bar" id="searchBar" style="display: none;">
         <div class="search-container">
           <i class="fas fa-search search-icon"></i>
           <input type="text" class="search-input" placeholder="Search destinations, packages, hotels...">
@@ -205,7 +269,7 @@
     </div>
 
     <!-- Mobile Navigation Overlay -->
-    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" style="display: none;">
       <div class="mobile-nav-content">
         <div class="mobile-nav-header">
           <a href="index.php?page=home" class="logo">
@@ -292,35 +356,3 @@
   </header>
 
   <main class="main-content">
-    <!-- Flash Messages -->
-    <?php if (!empty($_SESSION['flash_success'])): ?>
-      <div class="flash-messages">
-        <?php include __DIR__ . '/../components/alerts.php'; ?>
-        <?= renderAlert($_SESSION['flash_success'], 'success') ?>
-      </div>
-      <?php unset($_SESSION['flash_success']); ?>
-    <?php endif; ?>
-    
-    <?php if (!empty($_SESSION['flash_error'])): ?>
-      <div class="flash-messages">
-        <?php include __DIR__ . '/../components/alerts.php'; ?>
-        <?= renderAlert($_SESSION['flash_error'], 'error') ?>
-      </div>
-      <?php unset($_SESSION['flash_error']); ?>
-    <?php endif; ?>
-    
-    <?php if (!empty($_SESSION['flash_info'])): ?>
-      <div class="flash-messages">
-        <?php include __DIR__ . '/../components/alerts.php'; ?>
-        <?= renderAlert($_SESSION['flash_info'], 'info') ?>
-      </div>
-      <?php unset($_SESSION['flash_info']); ?>
-    <?php endif; ?>
-    
-    <?php if (!empty($_SESSION['flash_warning'])): ?>
-      <div class="flash-messages">
-        <?php include __DIR__ . '/../components/alerts.php'; ?>
-        <?= renderAlert($_SESSION['flash_warning'], 'warning') ?>
-      </div>
-      <?php unset($_SESSION['flash_warning']); ?>
-    <?php endif; ?>

@@ -66,25 +66,25 @@
           <ul class="footer-destinations">
             <li>
               <a href="index.php?page=packages&destination=bali">
-                <img src="<?= APP_URL ?>/public/images/destinations/bali-thumb.jpg" alt="Bali" class="destination-thumb">
+                <img src="<?= APP_URL ?>/public/images/destinations/bali-thumb.jpg" alt="Bali" class="destination-thumb" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                 <span class="destination-name">Bali, Indonesia</span>
               </a>
             </li>
             <li>
               <a href="index.php?page=packages&destination=santorini">
-                <img src="<?= APP_URL ?>/public/images/destinations/santorini-thumb.jpg" alt="Santorini" class="destination-thumb">
+                <img src="<?= APP_URL ?>/public/images/destinations/santorini-thumb.jpg" alt="Santorini" class="destination-thumb" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                 <span class="destination-name">Santorini, Greece</span>
               </a>
             </li>
             <li>
               <a href="index.php?page=packages&destination=maldives">
-                <img src="<?= APP_URL ?>/public/images/destinations/maldives-thumb.jpg" alt="Maldives" class="destination-thumb">
+                <img src="<?= APP_URL ?>/public/images/destinations/maldives-thumb.jpg" alt="Maldives" class="destination-thumb" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                 <span class="destination-name">Maldives</span>
               </a>
             </li>
             <li>
               <a href="index.php?page=packages&destination=switzerland">
-                <img src="<?= APP_URL ?>/public/images/destinations/switzerland-thumb.jpg" alt="Switzerland" class="destination-thumb">
+                <img src="<?= APP_URL ?>/public/images/destinations/switzerland-thumb.jpg" alt="Switzerland" class="destination-thumb" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                 <span class="destination-name">Swiss Alps</span>
               </a>
             </li>
@@ -196,7 +196,7 @@
           </div>
 
           <!-- Back to Top -->
-          <button class="back-to-top" id="backToTop">
+          <button class="back-to-top" id="backToTop" style="display: none;">
             <i class="fas fa-arrow-up"></i>
             <span>Back to Top</span>
           </button>
@@ -205,11 +205,46 @@
     </div>
   </footer>
 
-  <!-- JavaScript -->
-  <script src="<?= APP_URL ?>/public/js/main.js"></script>
+  <!-- Essential JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="<?= APP_URL ?>/public/js/main.js?v=<?= time() ?>"></script>
   
-  <!-- Additional Scripts (can be added as needed) -->
+  <!-- Initialize Basic Functionality -->
   <script>
+  // Ensure jQuery is loaded
+  if (typeof jQuery === 'undefined') {
+    document.write('<script src="https://code.jquery.com/jquery-3.6.0.min.js"><\/script>');
+  }
+  
+  // Basic theme toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded successfully');
+    
+    // Simple theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        alert('Theme switched to ' + newTheme + ' mode');
+      });
+    }
+    
+    // Mobile theme toggle
+    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+    if (mobileThemeToggle) {
+      mobileThemeToggle.addEventListener('click', function() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+    }
+    
     // Back to Top Button
     const backToTopBtn = document.getElementById('backToTop');
     if (backToTopBtn) {
@@ -219,13 +254,13 @@
 
       window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
-          backToTopBtn.classList.add('visible');
+          backToTopBtn.style.display = 'flex';
         } else {
-          backToTopBtn.classList.remove('visible');
+          backToTopBtn.style.display = 'none';
         }
       });
     }
-
+    
     // Newsletter Form
     const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
@@ -236,7 +271,6 @@
         
         // Simulate subscription
         if (emailInput.value) {
-          // In a real app, you would send this to your backend
           newsletterForm.style.display = 'none';
           successMessage.style.display = 'flex';
           
@@ -249,14 +283,15 @@
         }
       });
     }
-
-    // Initialize tooltips for social icons
-    document.querySelectorAll('.social-icon').forEach(icon => {
-      icon.addEventListener('mouseenter', function() {
-        const platform = this.querySelector('i').className.split('-').pop();
-        this.setAttribute('title', `Follow us on ${platform.charAt(0).toUpperCase() + platform.slice(1)}`);
-      });
-    });
+    
+    // Hide loading screen
+    const loadingScreen = document.getElementById('loading');
+    if (loadingScreen) {
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+      }, 1000);
+    }
+  });
   </script>
 </body>
 </html>
